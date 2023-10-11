@@ -1,0 +1,7 @@
+{
+  "name": "HLC_1.9_AppDatos",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

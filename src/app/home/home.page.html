@@ -1,0 +1,75 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Cálculo Basal - Ecuación de Harris-Benedict & Análisis de IMC</ion-title
+    >
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">APP de Recogida y Muestra de Datos</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <h3>
+    El metabolismo basal diario se puede calcular de manera muy aproximada de la
+    siguiente forma mediante las ecuaciones de Harris-Benedict: <br />
+    Hombre: (10 x peso en kg) + (6.25 × altura en cm) – (5 × edad en años) + 5.
+    <br />
+    Mujer: (10 x peso en kg) + (6.25 × altura en cm) – (5 × edad en años) – 161
+    <br />
+    <br />
+
+    El IMC, o Índice de Masa Corporal, es una medida que se utiliza comúnmente
+    para evaluar la proporción entre el peso y la altura de una persona. Es una
+    herramienta que proporciona una estimación de la grasa corporal y se utiliza
+    para clasificar a las personas en categorías de peso.
+  </h3>
+  <div id="container">
+    <ion-input
+      label="Peso"
+      [(ngModel)]="peso"
+      type="number"
+      placeholder="Introduce tu peso en kg"
+      class="campo-entrada"
+    ></ion-input>
+    <ion-input
+      label="Altura input"
+      [(ngModel)]="altura"
+      type="number"
+      placeholder="Introduce tu altura en cm"
+      class="campo-entrada"
+    ></ion-input>
+    <ion-input
+      label="Edad input"
+      [(ngModel)]="edad"
+      type="number"
+      placeholder="Introduce tu edad"
+      class="campo-entrada"
+    ></ion-input>
+    <ion-select label="Género" [(ngModel)]="genero" class="campo-entrada">
+      <ion-select-option value="hombre">Hombre</ion-select-option>
+      <ion-select-option value="mujer">Mujer</ion-select-option>
+    </ion-select>
+    <br>
+    <ion-button (click)="calcularGastoBasal(peso, altura, edad, genero)" 
+      >Calcular Gasto Basal</ion-button
+    >
+    <ion-button (click)="calcularIMC(peso, altura)" 
+      >Calcular IMC</ion-button
+    >
+    <p style="color: orange">{{mensajeBasal}}</p>
+    <p style="color: orange">{{mensajeIMC}}</p>
+
+    <div id="imagenes" style="display: flex; flex-direction: column; align-items: flex-end; margin-left: 10px;">
+      <img id="pesobajo" src="assets/imgs/pesobajo.png" alt="Bajo Peso" *ngIf="categoriaIMC === 'Bajo peso'" class="imagen-imc" />
+      <img id="pesonormal" src="assets/imgs/pesonormal.png" alt="Peso Normal" *ngIf="categoriaIMC === 'Peso normal'" class="imagen-imc" />
+      <img id="pesosobre" src="assets/imgs/pesosobre.png" alt="Sobrepeso" *ngIf="categoriaIMC === 'Sobrepeso'" class="imagen-imc" />
+      <img id="pesoobeso" src="assets/imgs/pesoobeso.png" alt="Obesidad" *ngIf="categoriaIMC === 'Obesidad'" class="imagen-imc" />
+    </div>
+    
+
+  </div>
+</ion-content>
