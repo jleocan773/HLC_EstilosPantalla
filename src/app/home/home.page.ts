@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -15,31 +15,44 @@ export class HomePage {
   mensajeBasal: String = '';
   mensajeIMC: String = '';
   genero: String = '';
-  categoriaIMC: String = ''; // Variable para la categoría del IMC
+  categoriaIMC: String = '';
+  isHorizontalOrientation: boolean = window.innerWidth > window.innerHeight;
+  mainContainerClass: string = '';
 
+  constructor() {
+    this.isHorizontalOrientation = window.innerWidth > window.innerHeight;
+    this.mainContainerClass = this.isHorizontalOrientation ? 'fondo-verde' : '';
+  }
 
-  constructor() {}
-
-  calcularGastoBasal(peso: number, altura: number, edad: number, genero: String) {
+  calcularGastoBasal(
+    peso: number,
+    altura: number,
+    edad: number,
+    genero: String
+  ) {
     if (genero == 'hombre') {
-      this.resultado = 13.397 * peso + 4.799 * altura - 5.677 * edad + 88.362;;
+      this.resultado = 13.397 * peso + 4.799 * altura - 5.677 * edad + 88.362;
       this.resultado.toFixed(2);
-      this.mensajeBasal
-   = "Tu gasto basal aproximado es de " + this.resultado.toString() + " calorías diarias";
+      this.mensajeBasal =
+        'Tu gasto basal aproximado es de ' +
+        this.resultado.toString() +
+        ' calorías diarias';
     } else {
-      this.resultado = 9.247 * peso + 3.098 * altura - 4.330 * edad + 447.593;;
+      this.resultado = 9.247 * peso + 3.098 * altura - 4.33 * edad + 447.593;
       this.resultado.toFixed(2);
-      this.mensajeBasal
-   = "Tu gasto basal aproximado es de " + this.resultado.toString() + " calorías diarias";
+      this.mensajeBasal =
+        'Tu gasto basal aproximado es de ' +
+        this.resultado.toString() +
+        ' calorías diarias';
     }
   }
 
   calcularIMC(peso: number, altura: number) {
     this.alturaMetros = altura / 100;
     this.imc = peso / (this.alturaMetros * this.alturaMetros);
-    
+
     this.mensajeIMC = this.imc.toFixed(2);
-  
+
     let categoria = '';
     if (this.imc < 18.5) {
       categoria = 'Bajo peso';
@@ -50,14 +63,21 @@ export class HomePage {
     } else {
       categoria = 'Obesidad';
     }
-  
+
     this.mensajeIMC = `Tu IMC es ${this.mensajeIMC} (${categoria})`;
 
     this.categoriaIMC = categoria;
-    
+
 
   }
-  
-  
+
+  @HostListener('window:orientationchange', ['$event'])
+  onOrientationChange(event: Event): void {
+    this.isHorizontalOrientation = window.innerWidth > window.innerHeight;
+    this.mainContainerClass = this.isHorizontalOrientation ? 'fondo-verde' : '';
+  }
+
+
+
 
 }
